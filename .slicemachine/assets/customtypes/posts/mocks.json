@@ -1,6 +1,71 @@
 {
-  "id": "4a24d283-b0c8-4e4b-9ef4-c90ecd6e0bc1",
-  "uid": "voluptatem-reiciendis-quia",
+  "id": "aed077a3-4578-4b5d-bb59-68f8228472c5",
+  "uid": "qui-et-odio",
   "type": "posts",
-  "data": {}
+  "data": {
+    "title": "matrix synergistic web services",
+    "subtitle": "synthesize B2B ROI",
+    "author": "reintermediate 24/7 interfaces",
+    "banner": {
+      "dimensions": {
+        "width": 900,
+        "height": 500
+      },
+      "alt": "Placeholder image",
+      "copyright": null,
+      "url": "https://images.unsplash.com/photo-1579931794097-0ad001e51edb?w=900&h=500&fit=crop"
+    },
+    "content": [
+      {
+        "heading": "streamline B2B models",
+        "body": [
+          {
+            "type": "paragraph",
+            "text": "Qui occaecat eu nisi ad esse.",
+            "spans": []
+          }
+        ]
+      },
+      {
+        "heading": "morph interactive architectures",
+        "body": [
+          {
+            "type": "paragraph",
+            "text": "Ad minim tempor elit proident est enim elit amet consequat dolor eu quis.",
+            "spans": []
+          }
+        ]
+      },
+      {
+        "heading": "syndicate front-end paradigms",
+        "body": [
+          {
+            "type": "paragraph",
+            "text": "Eu amet sint esse ullamco velit. Eu exercitation sit voluptate laboris deserunt dolor qui consectetur adipisicing ullamco. Minim ullamco occaecat Lorem non in occaecat quis labore dolor voluptate exercitation proident.",
+            "spans": []
+          }
+        ]
+      },
+      {
+        "heading": "integrate enterprise eyeballs",
+        "body": [
+          {
+            "type": "paragraph",
+            "text": "Incididunt nisi sint esse Lorem elit.",
+            "spans": []
+          }
+        ]
+      },
+      {
+        "heading": "drive world-class platforms",
+        "body": [
+          {
+            "type": "paragraph",
+            "text": "Laboris consequat amet anim tempor. Aliquip consectetur culpa ea aliquip qui exercitation incididunt laboris. Ullamco Lorem cupidatat ut tempor labore.",
+            "spans": []
+          }
+        ]
+      }
+    ]
+  }
 }

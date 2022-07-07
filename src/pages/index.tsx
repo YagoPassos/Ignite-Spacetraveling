@@ -31,7 +31,7 @@ export default function Home({ postsPagination }: HomeProps) {
 
   // const [posts, setPosts] = useState(postsPagination.results)
 
-  console.log(postsPagination)
+  // console.log(postsPagination)
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function Home({ postsPagination }: HomeProps) {
         <div className={styles.posts}>
           {
             postsPagination.results.map(post => (
-              <Link key={post.uid} href={`posts/${post.uid}`}>
+              <Link key={post.uid} href={`post/${post.uid}`}>
                 <a>
                   <strong>{post.data.title}</strong>
                   <p>{post.data.subtitle}</p>
@@ -86,7 +86,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   }
 
-  console.log(postsPagination)
+  // console.log(postsPagination)
   return {
     props: { postsPagination }
   }

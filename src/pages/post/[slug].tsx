@@ -4,6 +4,9 @@ import { RichText } from 'prismic-reactjs';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
 import Header from '../../components/Header';
 
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+
 import { getPrismicClient } from '../../services/prismic';
 
 import commonStyles from '../../styles/common.module.scss';
@@ -43,7 +46,7 @@ export default function Post({ post }: PostProps) {
         <img src={`${post.data.banner.url}`} alt="" />
         <div className={styles.container}>
           <strong>{post.data.title}</strong>
-          <div className="legend">
+          <div className={styles.legends}>
             <time> <FiCalendar /> {post.first_publication_date}</time>
             <span> <FiUser /> {post.data.author}</span>
             <span> <FiClock /> time</span>
@@ -88,7 +91,13 @@ export const getStaticProps = async ({ params }) => {
     const response = await prismic.getByUID('posts', String(slug));
 
     const post = {
-      first_publication_date: response.first_publication_date,
+      first_publication_date: format(
+        new Date(response.first_publication_date,),
+        "dd LLL yyyy",
+        {
+          locale: ptBR,
+        })
+        ,
       data: {
         title: response.data.title,
         banner: {

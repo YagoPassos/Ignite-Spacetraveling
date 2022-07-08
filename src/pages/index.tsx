@@ -7,6 +7,10 @@ import styles from './home.module.scss';
 import Link from 'next/link';
 import Head from 'next/head';
 import { useState } from 'react';
+import Header from '../components/Header';
+
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 interface Post {
   uid?: string;
@@ -39,6 +43,8 @@ export default function Home({ postsPagination }: HomeProps) {
       <Head>
         <title> Home | Spacetraveling</title>
       </Head>
+
+      <Header />
       <main className={styles.contentContainer}>
         <div className={styles.posts}>
           {
@@ -47,9 +53,9 @@ export default function Home({ postsPagination }: HomeProps) {
                 <a>
                   <strong>{post.data.title}</strong>
                   <p>{post.data.subtitle}</p>
-                  <div>
-                    <time> <FiCalendar />{post.first_publication_date}</time>
-                    <span><FiUser />{post.data.author}</span>
+                  <div className={styles.legends}>
+                    <time> <FiCalendar /> {post.first_publication_date}</time>
+                    <span><FiUser /> {post.data.author}</span>
                   </div>
                 </a>
               </Link>
@@ -57,7 +63,9 @@ export default function Home({ postsPagination }: HomeProps) {
           }
         </div>
 
-        <button>Carregar Mais</button>
+        <div className={styles.showMore}>
+          <button>Carregar Mais</button>
+        </div>
       </main>
     </>
   )
@@ -67,7 +75,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
 
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 10,
+    pageSize: 1,
   });
 
   const postsPagination = {
@@ -75,7 +83,13 @@ export const getStaticProps: GetStaticProps = async () => {
     results: postsResponse.results.map((post: any) => {
       return {
         uid: post.uid,
-        first_publication_date: post.first_publication_date,
+        first_publication_date: format(
+          new Date(post.first_publication_date),
+          "dd LLL yyyy",
+          {
+            locale: ptBR,
+          }
+        ),
         data: {
           title: post.data.title,
           subtitle: post.data.subtitle,

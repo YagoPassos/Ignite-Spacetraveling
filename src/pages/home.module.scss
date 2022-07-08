@@ -2,18 +2,11 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 2rem;
-
-    button {
-        max-width: 700px;
-        margin: 5rem auto 0;
-        color: var(--pink-500)
-    }
-
 }
 
 .posts {
     max-width: 700px;
-    // margin: 5rem auto 0;
+    margin: 5rem auto 0;
 
     strong {
         display: block;
@@ -41,5 +34,21 @@
         span {
             color: var(--gray-700);
         }
+    }
+
+    .legends{
+        display: flex;
+        font-size:  0.875rem;
+
+        align-items: center;
+    }
+}
+
+.showMore{
+    max-width: 700px;
+    margin: 5rem auto 0;
+
+    button {
+        color: var(--pink-500);
     }
 }

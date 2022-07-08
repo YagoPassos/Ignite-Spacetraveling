@@ -1,10 +1,17 @@
+import Link from 'next/link';
 import styles from './header.module.scss';
 
 export default function Header() {
   return (
     <>
-      <header className={styles.container}>
-        <img src="../../img/Logo.png" alt="" />
+      <header className={styles.contentContainer}>
+        <div className={styles.container}>
+          <Link href="/">
+            <a>
+              <img src="/img/Logo.png" alt="Logo" />
+            </a>
+          </Link>
+        </div>
       </header>
     </>
   )

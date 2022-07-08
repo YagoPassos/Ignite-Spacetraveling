@@ -33,9 +33,25 @@ interface HomeProps {
 
 export default function Home({ postsPagination }: HomeProps) {
 
-  // const [posts, setPosts] = useState(postsPagination.results)
+  const [posts, setPosts] = useState<Post[]>(postsPagination.results);
+  const [nextPage, setNextPage] = useState(postsPagination.next_page)
 
-  // console.log(postsPagination)
+
+  async function AddPost() {
+    const nextPageData = await fetch(String(nextPage))
+      .then(res => res.json())
+      .then(data => {
+        return data
+      })
+
+    setPosts([
+      ...posts,
+      ...nextPageData.results
+    ])
+
+    setNextPage(nextPageData.next_page)
+
+  }
 
   return (
     <>
@@ -48,13 +64,19 @@ export default function Home({ postsPagination }: HomeProps) {
       <main className={styles.contentContainer}>
         <div className={styles.posts}>
           {
-            postsPagination.results.map(post => (
+            posts.map(post => (
               <Link key={post.uid} href={`post/${post.uid}`}>
                 <a>
                   <strong>{post.data.title}</strong>
                   <p>{post.data.subtitle}</p>
                   <div className={styles.legends}>
-                    <time> <FiCalendar /> {post.first_publication_date}</time>
+                    <time> <FiCalendar /> {format(
+                      new Date(post.first_publication_date),
+                      "dd LLL yyyy",
+                      {
+                        locale: ptBR,
+                      }
+                    )}</time>
                     <span><FiUser /> {post.data.author}</span>
                   </div>
                 </a>
@@ -62,10 +84,13 @@ export default function Home({ postsPagination }: HomeProps) {
             ))
           }
         </div>
-
-        <div className={styles.showMore}>
-          <button>Carregar Mais</button>
-        </div>
+        {
+          (nextPage) ?
+            < div className={styles.showMore}>
+              <button onClick={AddPost}>Carregar Mais</button>
+            </div>
+            : null
+        }
       </main>
     </>
   )
@@ -75,7 +100,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
 
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 1,
+    pageSize: 2,
   });
 
   const postsPagination = {
@@ -83,13 +108,7 @@ export const getStaticProps: GetStaticProps = async () => {
     results: postsResponse.results.map((post: any) => {
       return {
         uid: post.uid,
-        first_publication_date: format(
-          new Date(post.first_publication_date),
-          "dd LLL yyyy",
-          {
-            locale: ptBR,
-          }
-        ),
+        first_publication_date: post.first_publication_date,
         data: {
           title: post.data.title,
           subtitle: post.data.subtitle,
@@ -100,8 +119,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
   }
 
-  // console.log(postsPagination)
   return {
-    props: { postsPagination }
+    props: {
+      postsPagination,
+    }
   }
 };

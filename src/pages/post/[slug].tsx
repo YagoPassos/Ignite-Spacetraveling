@@ -47,7 +47,12 @@ export default function Post({ post }: PostProps) {
         <div className={styles.container}>
           <strong>{post.data.title}</strong>
           <div className={styles.legends}>
-            <time> <FiCalendar /> {post.first_publication_date}</time>
+            <time> <FiCalendar /> {format(
+              new Date(post.first_publication_date,),
+              "dd LLL yyyy",
+              {
+                locale: ptBR,
+              })}</time>
             <span> <FiUser /> {post.data.author}</span>
             <span> <FiClock /> time</span>
           </div>
@@ -55,7 +60,7 @@ export default function Post({ post }: PostProps) {
           <div className={styles.content}>
             {
               post.data.content.map(content => (
-                <div>
+                <div key={content.heading}>
                   <h3>{content.heading}</h3>
                   {content.body.map(content => (
                     <p>{content.text}</p>
@@ -91,13 +96,7 @@ export const getStaticProps = async ({ params }) => {
     const response = await prismic.getByUID('posts', String(slug));
 
     const post = {
-      first_publication_date: format(
-        new Date(response.first_publication_date,),
-        "dd LLL yyyy",
-        {
-          locale: ptBR,
-        })
-        ,
+      first_publication_date: response.first_publication_date,
       data: {
         title: response.data.title,
         banner: {

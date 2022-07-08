@@ -49,7 +49,7 @@ export default function Post({ post }: PostProps) {
             <span> <FiClock /> time</span>
           </div>
 
-          <div>
+          <div className={styles.content}>
             {
               post.data.content.map(content => (
                 <div>

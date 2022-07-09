@@ -11,6 +11,7 @@ import { getPrismicClient } from '../../services/prismic';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
+import { useRouter } from 'next/router';
 
 interface Post {
   first_publication_date: string | null;
@@ -34,9 +35,25 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps) {
+  const router = useRouter()
 
+  if (router.isFallback) {
+    return (
+      <p className= {styles.loading}>
+        Carregando...
+      </p>
+    );
+  }
   // console.log(post.data.content);
+  const teste = post.data.content.reduce((acc, post) => {
 
+    const bodyText = post.body.map((body) => {return body.text})
+    const headinText = post.heading
+
+    return acc = bodyText + headinText
+  }, '')
+
+  const time = Math.round(teste.split(/[,. -'"]/).length / 200)
 
   return (
     <>
@@ -54,7 +71,7 @@ export default function Post({ post }: PostProps) {
                 locale: ptBR,
               })}</time>
             <span> <FiUser /> {post.data.author}</span>
-            <span> <FiClock /> time</span>
+            <span> <FiClock /> {time} min </span>
           </div>
 
           <div className={styles.content}>
@@ -79,9 +96,13 @@ export const getStaticPaths = async () => {
   const prismic = getPrismicClient({});
   const posts = await prismic.getByType('posts');
 
+  const slugsArray = posts.results.map(post => ({
+    params: { slug: post.uid },
+  }));
+
   return {
-    paths: [],
-    fallback: 'blocking' // false or 'blocking'
+    paths: slugsArray,
+    fallback: 'blocking',
   };
 };
 
@@ -96,9 +117,11 @@ export const getStaticProps = async ({ params }) => {
     const response = await prismic.getByUID('posts', String(slug));
 
     const post = {
+      uid: response.uid,
       first_publication_date: response.first_publication_date,
       data: {
         title: response.data.title,
+        subtitle: response.data.subtitle,
         banner: {
           url: response.data.banner.url,
         },

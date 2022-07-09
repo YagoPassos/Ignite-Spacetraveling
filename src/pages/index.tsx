@@ -85,11 +85,10 @@ export default function Home({ postsPagination }: HomeProps) {
           }
         </div>
         {
-          (nextPage) ?
+          (nextPage) &&
             < div className={styles.showMore}>
-              <button onClick={AddPost}>Carregar Mais</button>
+              <button onClick={AddPost}>Carregar mais posts</button>
             </div>
-            : null
         }
       </main>
     </>
